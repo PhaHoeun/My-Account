@@ -47,7 +47,7 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
               ),
-              hintText: "Input First Name=============",
+              hintText: "Input First Name",
             ),
             CustomTextField(
               onSaved: (value) {
@@ -92,7 +92,7 @@ class HomePage extends StatelessWidget {
                     }
                     context.pushRoute(const LoginRouter());
                   },
-                  child: const Text("Submit Form=========="),
+                  child: const Text("Submit Form"),
                 ),
                 const SizedBox(width: 20),
                 ElevatedButton(

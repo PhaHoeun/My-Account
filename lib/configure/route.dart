@@ -6,14 +6,22 @@ import 'package:custom_textfield/widget/custom_login.dart';
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route',
   routes: <AutoRoute>[
-    AutoRoute(page: HomePage, initial: true, path: '/'),
-    AutoRoute(
+    CustomRoute(page: HomePage, initial: true, path: '/'),
+    CustomRoute(
       path: '/login',
       page: EmptyRouterPage,
       name: 'LoginRouter',
       children: [
-        AutoRoute(page: CustomLogin, path: ''),
-        AutoRoute(page: ProfilePage, path: 'profile/:profileId'),
+        CustomRoute(
+          page: CustomLogin,
+          path: '',
+          transitionsBuilder: TransitionsBuilders.noTransition,
+        ),
+        CustomRoute(
+          page: ProfilePage,
+          path: 'profile',
+          transitionsBuilder: TransitionsBuilders.slideBottom,
+        ),
       ],
     ),
   ],

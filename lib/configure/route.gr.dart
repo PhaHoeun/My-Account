@@ -24,27 +24,41 @@ class AppRouter extends _i2.RootStackRouter {
   @override
   final Map<String, _i2.PageFactory> pagesMap = {
     HomeRoute.name: (routeData) {
-      return _i2.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i1.HomePage());
+      return _i2.CustomPage<dynamic>(
+          routeData: routeData,
+          child: const _i1.HomePage(),
+          opaque: true,
+          barrierDismissible: false);
     },
     LoginRouter.name: (routeData) {
-      return _i2.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i2.EmptyRouterPage());
+      return _i2.CustomPage<dynamic>(
+          routeData: routeData,
+          child: const _i2.EmptyRouterPage(),
+          opaque: true,
+          barrierDismissible: false);
     },
     CustomLogin.name: (routeData) {
       final args = routeData.argsAs<CustomLoginArgs>(
           orElse: () => const CustomLoginArgs());
-      return _i2.MaterialPageX<dynamic>(
-          routeData: routeData, child: _i3.CustomLogin(key: args.key));
+      return _i2.CustomPage<dynamic>(
+          routeData: routeData,
+          child: _i3.CustomLogin(key: args.key),
+          transitionsBuilder: _i2.TransitionsBuilders.noTransition,
+          opaque: true,
+          barrierDismissible: false);
     },
     ProfileRoute.name: (routeData) {
-      final pathParams = routeData.inheritedPathParams;
+      final queryParams = routeData.queryParams;
       final args = routeData.argsAs<ProfileRouteArgs>(
-          orElse: () =>
-              ProfileRouteArgs(profileId: pathParams.getInt('profileId')));
-      return _i2.MaterialPageX<dynamic>(
+          orElse: () => ProfileRouteArgs(
+              user: queryParams.optString('user'),
+              id: queryParams.optInt('id')));
+      return _i2.CustomPage<dynamic>(
           routeData: routeData,
-          child: _i4.ProfilePage(key: args.key, profileId: args.profileId));
+          child: _i4.ProfilePage(key: args.key, user: args.user, id: args.id),
+          transitionsBuilder: _i2.TransitionsBuilders.slideBottom,
+          opaque: true,
+          barrierDismissible: false);
     }
   };
 
@@ -54,7 +68,7 @@ class AppRouter extends _i2.RootStackRouter {
         _i2.RouteConfig(LoginRouter.name, path: '/login', children: [
           _i2.RouteConfig(CustomLogin.name, path: '', parent: LoginRouter.name),
           _i2.RouteConfig(ProfileRoute.name,
-              path: 'profile/:profileId', parent: LoginRouter.name)
+              path: 'profile', parent: LoginRouter.name)
         ])
       ];
 }
@@ -99,24 +113,26 @@ class CustomLoginArgs {
 /// generated route for
 /// [_i4.ProfilePage]
 class ProfileRoute extends _i2.PageRouteInfo<ProfileRouteArgs> {
-  ProfileRoute({_i5.Key? key, required int profileId})
+  ProfileRoute({_i5.Key? key, String? user, int? id})
       : super(ProfileRoute.name,
-            path: 'profile/:profileId',
-            args: ProfileRouteArgs(key: key, profileId: profileId),
-            rawPathParams: {'profileId': profileId});
+            path: 'profile',
+            args: ProfileRouteArgs(key: key, user: user, id: id),
+            rawQueryParams: {'user': user, 'id': id});
 
   static const String name = 'ProfileRoute';
 }
 
 class ProfileRouteArgs {
-  const ProfileRouteArgs({this.key, required this.profileId});
+  const ProfileRouteArgs({this.key, this.user, this.id});
 
   final _i5.Key? key;
 
-  final int profileId;
+  final String? user;
+
+  final int? id;
 
   @override
   String toString() {
-    return 'ProfileRouteArgs{key: $key, profileId: $profileId}';
+    return 'ProfileRouteArgs{key: $key, user: $user, id: $id}';
   }
 }

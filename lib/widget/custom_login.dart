@@ -189,7 +189,8 @@ class _CustomLoginState extends State<CustomLogin> {
                       //   ),
                       // );
 
-                      context.pushRoute(ProfileRoute(profileId: 1));
+                      context.pushRoute(ProfileRoute(user: 'Kea', id: 1));
+                      // context.router.pushNamed('profile?id=500000&user=Pha');
                     }
                   },
                   buttonName: 'Login',

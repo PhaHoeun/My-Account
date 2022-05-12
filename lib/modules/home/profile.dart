@@ -5,10 +5,16 @@ import 'package:custom_textfield/utils/helper/custom_card.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({Key? key, @PathParam('profileId') required this.profileId})
-      : super(key: key);
+  const ProfilePage({
+    Key? key,
+    // @PathParam('profileId') required this.profileId,
+    @queryParam this.user,
+    @queryParam this.id,
+  }) : super(key: key);
 
-  final int profileId;
+  // final int? profileId;
+  final String? user;
+  final int? id;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +33,7 @@ class ProfilePage extends StatelessWidget {
                     onTap: () {
                       // Get.back();
                       context.pushRoute(const LoginRouter());
+                      // context.router.pop();
                     },
                     child: const Text(
                       "Back",
@@ -201,7 +208,7 @@ class ProfilePage extends StatelessWidget {
             ),
 
             const Padding(
-              padding: EdgeInsets.only(left: 40, top: 70, bottom: 40),
+              padding: EdgeInsets.only(left: 40, top: 40, bottom: 20),
               child: Text(
                 "Complete Profile",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
@@ -253,7 +260,29 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 100),
+            const SizedBox(height: 70),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "User: $user",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 20,
+                  ),
+                ),
+                Text(
+                  " ID: $id",
+                  style: const TextStyle(
+                    color: Colors.amber,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 20,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 30),
           ],
         ),
       ),
